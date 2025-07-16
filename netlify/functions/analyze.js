@@ -16,8 +16,12 @@ exports.handler = async function(event, context) {
         body: JSON.stringify({ error: 'Missing url in request body' })
       };
     }
-    // Fetch HTML
-    const htmlResponse = await fetch(url);
+    // Fetch HTML with custom User-Agent
+    const htmlResponse = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    });
     if (!htmlResponse.ok) {
       return {
         statusCode: 400,
