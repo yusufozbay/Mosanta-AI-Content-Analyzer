@@ -4,6 +4,7 @@ import { extractContentFromUrl } from './contentExtractorService';
 const GEMINI_API_KEY = 'AIzaSyBT5sxoLqCKH-8kTUt3hZBRdo2UtgqZjKM';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
 
+// Instruct Gemini to generate up to 10 FAQ entries and clarify label formatting
 const SYSTEM_PROMPT = `Görevin 20 yıllık çok deneyimli bir SEO uzmanı ve içerik yöneticisi olarak aşağıdaki bilgileri analiz etmektir.
 
 Öncesinde ve bundan sonra analiz edeceğin her bir içerikten Oggusto.com'un Blog içeriklerindeki yaklaşımı, uzmanlığı, dili, üslubu, otoriterliği, tarzı, hataları vs ne varsa öğrenip kendini fine tune etmeni istiyorum.
@@ -108,7 +109,7 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ### 4.2 [Soru 2]
 **Cevap:** [1-2 cümlelik net cevap]
 
-[5 soruya kadar devam eder]
+[10 soruya kadar devam et]
 
 ## 5. Rakip İçerik Stratejileri
 
@@ -159,7 +160,7 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 
 ## Görevin:
 
-Amacın, mevcut içeriği geliştirmek ve zenginleştirmek için bir editöre sunulacak şekilde, kapsamlı ve detaylı bir içerik güncelleme/zenginleştirme taslağı çıkarmaktır. Önerilerin ana başlıklar ve alt başlıklar şeklinde olmalı ve örnekler içermelidir. Ayrıca, her önerinde "**Faydası Nedir?:**" ve "**Önerilen İçerik:**" gibi kalıpları kullanarak, bu önerinin sağlayacağı faydayı editöre açıklamalı, ekstra bilgi vermelisin. Tüm bu etiketleri ve başlıkları **kalın** ve sonuna **iki nokta üst üste (:)** ile yazmalısın. Açıklamalar bir sonraki satırda başlamalı.
+Amacın, mevcut içeriği geliştirmek ve zenginleştirmek için bir editöre sunulacak şekilde, kapsamlı ve detaylı bir içerik güncelleme/zenginleştirme taslağı çıkarmaktır. Önerilerin ana başlıklar ve alt başlıklar şeklinde olmalı ve örnekler içermelidir. Ayrıca, her önerinde "**Faydası Nedir?:**" ve "**Önerilen İçerik:**" gibi kalıpları kullanarak, bu önerinin sağlayacağı faydayı editöre açıklamalı, ekstra bilgi vermelisin. Tüm bu etiketleri ve başlıkları **yalnızca** "**Faydası Nedir?:**" ve "**Önerilen İçerik:**" olarak, başka hiçbir karakter veya sembol eklemeden, **kalın** ve sonuna **iki nokta üst üste (:)** ile yazmalısın. Açıklamalar bir sonraki satırda başlamalı.
 
 Aynı zamanda LLM büyük dil modellerinin içeriği anlayacağı ve ChatGPT, Claude, Deepseek, Gemini, Perplexity gibi LLMlerin içeriklerimizi verimli anlayabilmesi ve kullanıcılara sunabilmesi için uygun içerik optimizasyon önerilierini paylaşmalısın.
 
