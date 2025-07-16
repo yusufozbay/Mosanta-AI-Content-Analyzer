@@ -139,6 +139,14 @@ KULLANICI SORUSU: ${content}
 
   if (!analysisResults) return null;
 
+  // Add formatting function
+  function formatAnalysisResults(text: string): string {
+    return text
+      .replace(/\*\*Faydası Nedir\?\*\*/g, '**Faydası Nedir?:**')
+      .replace(/Faydası Nedir\?/g, '**Faydası Nedir?:**')
+      .replace(/Önerilen İçerik:/g, '**Önerilen İçerik:**');
+  }
+
   return (
     <>
       {/* Chat Toggle Button */}
@@ -223,7 +231,7 @@ KULLANICI SORUSU: ${content}
                             code: ({ children }) => <code className="bg-gray-200 px-1 rounded text-xs">{children}</code>,
                           }}
                         >
-                          {message.content}
+                          {formatAnalysisResults(message.content)}
                         </ReactMarkdown>
                       ) : (
                         <p className="text-sm">{message.content}</p>

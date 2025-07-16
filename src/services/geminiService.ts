@@ -41,7 +41,7 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ## 1. Genel Değerlendirme ve Strateji Özeti
 
 ### Ana Başlık Önerisi: [Önerilen başlık]
-**Faydası Nedir?** [Fayda açıklaması]
+**Faydası Nedir?:** [Fayda açıklaması]
 
 ### Mevcut İçerik Durumu
 [Mevcut içeriğin kısa değerlendirmesi]
@@ -56,22 +56,22 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 
 ### 2.1 Ana Başlık Önerileri
 **Önerilen Başlık:** [Başlık]
-**Faydası Nedir?** [Fayda açıklaması]
+**Faydası Nedir?:** [Fayda açıklaması]
 
 ### 2.2 Alt Başlık Yapısı Önerileri
 
 #### 2.2.1 [Alt başlık 1]
-**Faydası Nedir?** [Fayda açıklaması]
+**Faydası Nedir?:** [Fayda açıklaması]
 **Önerilen İçerik:** [İçerik önerisi]
 
 #### 2.2.2 [Alt başlık 2]
-**Faydası Nedir?** [Fayda açıklaması]
+**Faydası Nedir?:** [Fayda açıklaması]
 **Önerilen İçerik:** [İçerik önerisi]
 
 [Diğer alt başlıklar aynı formatta devam eder]
 
 ### 2.3 LLM Optimizasyon Önerileri
-**Faydası Nedir?** ChatGPT, Claude, Deepseek, Gemini, Perplexity gibi LLM'lerin içeriği daha iyi anlayabilmesi için:
+**Faydası Nedir?:** ChatGPT, Claude, Deepseek, Gemini, Perplexity gibi LLM'lerin içeriği daha iyi anlayabilmesi için:
 
 - [Öneri 1]
 - [Öneri 2]
@@ -100,7 +100,7 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 
 ## 4. Sıkça Sorulan Sorular (SSS) Bölümü Önerisi
 
-**Faydası Nedir?** Kullanıcı deneyimini artırır ve arama motorlarında featured snippet olma şansını yükseltir.
+**Faydası Nedir?:** Kullanıcı deneyimini artırır ve arama motorlarında featured snippet olma şansını yükseltir.
 
 ### 4.1 [Soru 1]
 **Cevap:** [1-2 cümlelik net cevap]
@@ -125,17 +125,17 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ## 6. E-A-T ve YMYL Kriterleri Değerlendirmesi
 
 ### 6.1 Expertise (Uzmanlık) Önerileri
-**Faydası Nedir?** Google'ın E-A-T kriterlerine uyum sağlar.
+**Faydası Nedir?:** Google'ın E-A-T kriterlerine uyum sağlar.
 - [Öneri 1]
 - [Öneri 2]
 
 ### 6.2 Authoritativeness (Otorite) Önerileri
-**Faydası Nedir?** İçeriğin güvenilirliğini artırır.
+**Faydası Nedir?:** İçeriğin güvenilirliğini artırır.
 - [Öneri 1]
 - [Öneri 2]
 
 ### 6.3 Trustworthiness (Güvenilirlik) Önerileri
-**Faydası Nedir?** YMYL kriterlerine uyum sağlar.
+**Faydası Nedir?:** YMYL kriterlerine uyum sağlar.
 - [Öneri 1]
 - [Öneri 2]
 
@@ -159,7 +159,7 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 
 ## Görevin:
 
-Amacın, mevcut içeriği geliştirmek ve zenginleştirmek için bir editöre sunulacak şekilde, kapsamlı ve detaylı bir içerik güncelleme/zenginleştirme taslağı çıkarmaktır. Önerilerin ana başlıklar ve alt başlıklar şeklinde olmalı ve örnekler içermelidir. Ayrıca, her önerinde "Faydası Nedir?" şeklinde bu önerinin sağlayacağı faydayı editöre açıklamalı, ekstra bilgi vermelisin.
+Amacın, mevcut içeriği geliştirmek ve zenginleştirmek için bir editöre sunulacak şekilde, kapsamlı ve detaylı bir içerik güncelleme/zenginleştirme taslağı çıkarmaktır. Önerilerin ana başlıklar ve alt başlıklar şeklinde olmalı ve örnekler içermelidir. Ayrıca, her önerinde "**Faydası Nedir?:**" ve "**Önerilen İçerik:**" gibi kalıpları kullanarak, bu önerinin sağlayacağı faydayı editöre açıklamalı, ekstra bilgi vermelisin. Tüm bu etiketleri ve başlıkları **kalın** ve sonuna **iki nokta üst üste (:)** ile yazmalısın. Açıklamalar bir sonraki satırda başlamalı.
 
 Aynı zamanda LLM büyük dil modellerinin içeriği anlayacağı ve ChatGPT, Claude, Deepseek, Gemini, Perplexity gibi LLMlerin içeriklerimizi verimli anlayabilmesi ve kullanıcılara sunabilmesi için uygun içerik optimizasyon önerilierini paylaşmalısın.
 

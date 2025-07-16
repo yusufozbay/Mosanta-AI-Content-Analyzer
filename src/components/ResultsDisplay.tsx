@@ -207,7 +207,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, isLoading, err
               ),
             }}
           >
-            {results}
+            {formatAnalysisResults(results)}
           </ReactMarkdown>
         </div>
       </div>
@@ -220,5 +220,13 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, isLoading, err
     </div>
   );
 };
+
+// Add formatting function
+function formatAnalysisResults(text: string): string {
+  return text
+    .replace(/\*\*Faydası Nedir\?\*\*/g, '**Faydası Nedir?:**')
+    .replace(/Faydası Nedir\?/g, '**Faydası Nedir?:**')
+    .replace(/Önerilen İçerik:/g, '**Önerilen İçerik:**');
+}
 
 export default ResultsDisplay;
