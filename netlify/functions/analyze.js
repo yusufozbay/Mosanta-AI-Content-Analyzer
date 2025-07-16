@@ -16,20 +16,18 @@ exports.handler = async function(event, context) {
         body: JSON.stringify({ error: 'Missing url in request body' })
       };
     }
-    // Fetch HTML with custom User-Agent
-    const htmlResponse = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-      }
-    });
+    // Use SerpAPI to fetch the HTML content
+    const serpApiKey = process.env.SERPAPI_KEY;
+    const serpApiUrl = `https://serpapi.com/search?engine=google&api_key=${serpApiKey}&url=${encodeURIComponent(url)}`;
+    const htmlResponse = await fetch(serpApiUrl);
     if (!htmlResponse.ok) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Failed to fetch URL' })
+        body: JSON.stringify({ error: 'Failed to fetch URL via SerpAPI' })
       };
     }
     const html = await htmlResponse.text();
-    // Extract <body> text
+    // Extract <body> content
     const dom = new JSDOM(html);
     const bodyText = dom.window.document.body.textContent || '';
     if (!bodyText.trim()) {
