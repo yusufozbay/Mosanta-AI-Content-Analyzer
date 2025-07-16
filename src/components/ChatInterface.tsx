@@ -142,9 +142,12 @@ KULLANICI SORUSU: ${content}
   // Add formatting function
   function formatAnalysisResults(text: string): string {
     return text
-      .replace(/\*\*Faydası Nedir\?\*\*/g, '**Faydası Nedir?:**')
-      .replace(/Faydası Nedir\?/g, '**Faydası Nedir?:**')
-      .replace(/Önerilen İçerik:/g, '**Önerilen İçerik:**');
+      // Faydası Nedir? (anywhere, any bold, any colon, any whitespace)
+      .replace(/(?:\*\*)?\s*Faydası Nedir\s*[:：]?\s*(?:\*\*)?/gi, '\n**Faydası Nedir?:** ')
+      // Önerilen İçerik (anywhere, any bold, any colon, any whitespace)
+      .replace(/(?:\*\*)?\s*Önerilen İçerik\s*[:：]?\s*(?:\*\*)?/gi, '\n**Önerilen İçerik:** ')
+      // Remove duplicate newlines
+      .replace(/\n{2,}/g, '\n\n');
   }
 
   return (
