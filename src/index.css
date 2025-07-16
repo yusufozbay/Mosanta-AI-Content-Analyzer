@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for markdown content */
+.markdown-content {
+  line-height: 1.7;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  line-height: 1.3;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  padding-left: 0;
+}
+
+.markdown-content li {
+  margin-left: 0;
+}
+
+.markdown-content strong {
+  font-weight: 700;
+}
+
+.markdown-content p {
+  margin-bottom: 1rem;
+}
+
+/* Print styles for PDF generation */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+}

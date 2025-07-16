@@ -1,0 +1,105 @@
+# OGGUSTO [Konu Başlığı] İçerik Geliştirme Stratejisi: Analiz ve Öneri Outline'ı
+
+Bu plan, OGGUSTO'nun mevcut içeriğini, markanın kimliğinden ödün vermeden, sektördeki en kapsamlı ve kullanıcı dostu rehber haline getirmeyi amaçlamaktadır.
+
+**Analiz edilen içerik:**
+
+{{ $json['Main Content'] }}
+
+**Hangi rakip sayfalar analiz edildi:**
+
+{{ $json['Organic Result'] }}
+
+---
+
+### Oggusto İçerik Dili, Tonu ve Tarzı Analizi
+
+Oggusto'nun mevcut makalesi, markanın rafine kimliğini mükemmel bir şekilde yansıtıyor:
+
+*   **Ton:** [Analyze Oggusto's tone: e.g., Sophisticated, experiential, and personal.]
+*   **Tarz:** [Analyze Oggusto's style: e.g., Narrative-driven, focusing on the "why" behind the experience.]
+*   **Odak:** [Analyze Oggusto's focus: e.g., The ambiance, the vision, the curated details over raw data.]
+
+### Rakip Analizi ve Stratejik Karşılaştırma
+
+[Provide a sharp analysis comparing Oggusto to its competitors. Explicitly state who does what better. Conclude with a "Sonuç" paragraph that summarizes Oggusto's key opportunity to dominate by integrating competitors' structural strengths without sacrificing its unique soul.]
+
+---
+
+### Oggusto İçin Kapsamlı İçerik Zenginleştirme Outline'ı
+
+#### Ana Başlık Önerisi 1: [Write a Compelling and Thematic Title for the Suggestion]
+
+[Explain the strategic purpose of this addition in 1-2 sentences.]
+
+*   **Alt Başlık/Yapı Önerisi:** [Propose the new section's structure with specific subheadings.]
+    *   **Örnek Metin/Uygulama:** [Provide a short, concrete example written in the authentic Oggusto voice to illustrate the suggestion perfectly.]
+*   **Faydası Nedir?:** [Clearly state the benefit for the user and the business. Explain how it improves the experience, increases engagement, or boosts SEO.]
+*   **LLM & SEO Optimizasyon Önerisi:** [Provide actionable technical advice. Explain HOW to structure this for machines, e.g., "Use `<h2>` for thematic categories and `<strong>` for key terms like 'kaliteli komedi dizileri'. This allows LLMs to create direct, rich answers for specific user queries."]
+
+#### Ana Başlık Önerisi 2: [Write a Compelling and Thematic Title for the Suggestion]
+
+[Explain the strategic purpose of this addition in 1-2 sentences.]
+
+*   **Alt Başlık/Yapı Önerisi:** [Propose the new section's structure.]
+    *   **Örnek Metin/Uygulama:** [Provide a short, concrete example.]
+*   **Faydası Nedir?:** [State the clear benefit.]
+*   **LLM & SEO Optimizasyon Önerisi:** [Provide actionable technical advice.]
+
+_(Continue with more "Ana Başlık Önerisi" sections as needed to create a complete guide.)_
+
+---
+
+### Kullanıcılar İçin Sıkça Sorulan Sorular (SSS - FAQ)
+
+Bu bölüm, **"Query Fan-out"** metoduyla kullanıcının aklındaki tüm potansiyel sorular haritalanarak ve **"MUVERA"** filtresinden geçirilerek hazırlanmıştır. Amacı, kullanıcının aklındaki en kritik sorulara anında ve tatmin edici yanıtlar sunarak hem güven oluşturmak hem de SEO ve LLM optimizasyonu için en üst düzeyde performans sağlamaktır.
+
+**1. [Write the most critical, user-centric question 1]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**2. [Write the most critical, user-centric question 2]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**3. [Write the most critical, user-centric question 3]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**4. [Write the most critical, user-centric question 4]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**5. [Write the most critical, user-centric question 5]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**6. [Write the most critical, user-centric question 6]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**7. [Write the most critical, user-centric question 7]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**8. [Write the most critical, user-centric question 8]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**9. [Write the most critical, user-centric question 9]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+**10. [Write the most critical, user-centric question 10]**
+[Provide a direct, concise, and valuable 1-2 sentence answer.]
+
+---
+*Bu döküman Mosanta Al Agent kullanılarak hazırlanmıştır.*
+
+**Instructions** (Do not provide these instructions in the output!)
+
+1. Oggusto.com sitesi **E.E.A.T kriterlerine uygun içerikler** üretmelidir.
+2. Oggusto.com sitesi yemek, tatil, cilt bakımı gibi kategoriler başta olmak üzere Affiliate yöntemi ile kullanıcılara ürünler önermektedir.
+3. Dolayısıyla Oggusto.com Your Money, Your Life kriterlerini karşılayacak içerikler üretmek zorundadır.
+4. Yukarıdaki dikkat edilecek noktalardan hareketle, aşağıdaki bağlantıları okuyup Oggusto.com içeriklerini 100% E.E.A.T ve YMYL kriterlerini karşılayıp karşılamadığı yönünde öneriler ve analizler sunacaksın.
+4.1 https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+4.2 https://static.googleusercontent.com/media/guidelines.raterhub.com/en//searchqualityevaluatorguidelines.pdf
+5. Query Fan-out methodunu kullanıp LLM için en iyi ve verimli semantic içeriği çıkar.
+6. Query Fan-out methodunu ve MUVERA algoritmasını kullanıp içerik ile ilgili en iyi follow-up soruları ve cevapları içeriğe semantic context kapsamında ekle.
+7. Tüm çıktıyı Türkçe olarak hazırla.
+8. Çıktıyı markdown olarak ver.
+9. Output içerisine aşağıdaki gibi metinlee yer verme:
+"Harika bir görev. 20 yıllık bir SEO uzmanı ve içerik yöneticisi olarak, Oggusto'nun kimliğini hem koruyup hem de dijital dünyada onu rakipsiz kılacak stratejileri belirlemek üzere bu analizi derinlemesine yapacağım. Bu analiz, Oggusto'nun mevcut mükemmelliğini bir sonraki seviyeye taşıma yol haritası olacaktır.
+
+Kendimi Oggusto'nun rafine, deneyim odaklı ve otoriter sesine göre ayarladım. Analizime başlıyorum."
