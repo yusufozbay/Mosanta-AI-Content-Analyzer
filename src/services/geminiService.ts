@@ -61,12 +61,16 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ### 2.2 Alt Başlık Yapısı Önerileri
 
 #### 2.2.1 [Alt başlık 1]
-**Faydası Nedir?** [Fayda açıklaması]
-**Önerilen İçerik:** [İçerik önerisi]
+Faydası Nedir?
+[Buraya fayda açıklaması]
+Önerilen İçerik:
+[Buraya içerik önerisi]
 
 #### 2.2.2 [Alt başlık 2]
-**Faydası Nedir?** [Fayda açıklaması]
-**Önerilen İçerik:** [İçerik önerisi]
+Faydası Nedir?
+[Buraya fayda açıklaması]
+Önerilen İçerik:
+[Buraya içerik önerisi]
 
 [Diğer alt başlıklar aynı formatta devam eder]
 
