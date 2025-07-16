@@ -4,7 +4,6 @@ import { extractContentFromUrl } from './contentExtractorService';
 const GEMINI_API_KEY = 'AIzaSyBT5sxoLqCKH-8kTUt3hZBRdo2UtgqZjKM';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
 
-// Instruct Gemini to generate up to 10 FAQ entries and clarify label formatting
 const SYSTEM_PROMPT = `Görevin 20 yıllık çok deneyimli bir SEO uzmanı ve içerik yöneticisi olarak aşağıdaki bilgileri analiz etmektir.
 
 Öncesinde ve bundan sonra analiz edeceğin her bir içerikten Oggusto.com'un Blog içeriklerindeki yaklaşımı, uzmanlığı, dili, üslubu, otoriterliği, tarzı, hataları vs ne varsa öğrenip kendini fine tune etmeni istiyorum.
@@ -42,7 +41,7 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ## 1. Genel Değerlendirme ve Strateji Özeti
 
 ### Ana Başlık Önerisi: [Önerilen başlık]
-**Faydası Nedir?:** [Fayda açıklaması]
+**Faydası Nedir?** [Fayda açıklaması]
 
 ### Mevcut İçerik Durumu
 [Mevcut içeriğin kısa değerlendirmesi]
@@ -57,22 +56,22 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 
 ### 2.1 Ana Başlık Önerileri
 **Önerilen Başlık:** [Başlık]
-**Faydası Nedir?:** [Fayda açıklaması]
+**Faydası Nedir?** [Fayda açıklaması]
 
 ### 2.2 Alt Başlık Yapısı Önerileri
 
 #### 2.2.1 [Alt başlık 1]
-**Faydası Nedir?:** [Fayda açıklaması]
+**Faydası Nedir?** [Fayda açıklaması]
 **Önerilen İçerik:** [İçerik önerisi]
 
 #### 2.2.2 [Alt başlık 2]
-**Faydası Nedir?:** [Fayda açıklaması]
+**Faydası Nedir?** [Fayda açıklaması]
 **Önerilen İçerik:** [İçerik önerisi]
 
 [Diğer alt başlıklar aynı formatta devam eder]
 
 ### 2.3 LLM Optimizasyon Önerileri
-**Faydası Nedir?:** ChatGPT, Claude, Deepseek, Gemini, Perplexity gibi LLM'lerin içeriği daha iyi anlayabilmesi için:
+**Faydası Nedir?** ChatGPT, Claude, Deepseek, Gemini, Perplexity gibi LLM'lerin içeriği daha iyi anlayabilmesi için:
 
 - [Öneri 1]
 - [Öneri 2]
@@ -101,7 +100,9 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 
 ## 4. Sıkça Sorulan Sorular (SSS) Bölümü Önerisi
 
-**Faydası Nedir?:** Kullanıcı deneyimini artırır ve arama motorlarında featured snippet olma şansını yükseltir.
+**Faydası Nedir?** Kullanıcı deneyimini artırır ve arama motorlarında featured snippet olma şansını yükseltir.
+
+SSS bölümünde 10 adet soru-cevap önerisi üret.
 
 ### 4.1 [Soru 1]
 **Cevap:** [1-2 cümlelik net cevap]
@@ -109,7 +110,7 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ### 4.2 [Soru 2]
 **Cevap:** [1-2 cümlelik net cevap]
 
-[10 soruya kadar devam et]
+[10 soruya kadar devam eder]
 
 ## 5. Rakip İçerik Stratejileri
 
@@ -126,17 +127,17 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ## 6. E-A-T ve YMYL Kriterleri Değerlendirmesi
 
 ### 6.1 Expertise (Uzmanlık) Önerileri
-**Faydası Nedir?:** Google'ın E-A-T kriterlerine uyum sağlar.
+**Faydası Nedir?** Google'ın E-A-T kriterlerine uyum sağlar.
 - [Öneri 1]
 - [Öneri 2]
 
 ### 6.2 Authoritativeness (Otorite) Önerileri
-**Faydası Nedir?:** İçeriğin güvenilirliğini artırır.
+**Faydası Nedir?** İçeriğin güvenilirliğini artırır.
 - [Öneri 1]
 - [Öneri 2]
 
 ### 6.3 Trustworthiness (Güvenilirlik) Önerileri
-**Faydası Nedir?:** YMYL kriterlerine uyum sağlar.
+**Faydası Nedir?** YMYL kriterlerine uyum sağlar.
 - [Öneri 1]
 - [Öneri 2]
 
@@ -160,24 +161,22 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 
 ## Görevin:
 
-Amacın, mevcut içeriği geliştirmek ve zenginleştirmek için bir editöre sunulacak şekilde, kapsamlı ve detaylı bir içerik güncelleme/zenginleştirme taslağı çıkarmaktır. Önerilerin ana başlıklar ve alt başlıklar şeklinde olmalı ve örnekler içermelidir. Ayrıca, her önerinde "**Faydası Nedir?:**" ve "**Önerilen İçerik:**" gibi kalıpları kullanarak, bu önerinin sağlayacağı faydayı editöre açıklamalı, ekstra bilgi vermelisin. Tüm bu etiketleri ve başlıkları **yalnızca** "**Faydası Nedir?:**" ve "**Önerilen İçerik:**" olarak, başka hiçbir karakter veya sembol eklemeden, **kalın** ve sonuna **iki nokta üst üste (:)** ile yazmalısın. Açıklamalar bir sonraki satırda başlamalı.
+Amacın, mevcut içeriği geliştirmek ve zenginleştirmek için bir editöre sunulacak şekilde, kapsamlı ve detaylı bir içerik güncelleme/zenginleştirme taslağı çıkarmaktır. Önerilerin ana başlıklar ve alt başlıklar şeklinde olmalı ve örnekler içermelidir. Ayrıca, her önerinde "Faydası Nedir?" şeklinde bu önerinin sağlayacağı faydayı editöre açıklamalı, ekstra bilgi vermelisin.
 
 Aynı zamanda LLM büyük dil modellerinin içeriği anlayacağı ve ChatGPT, Claude, Deepseek, Gemini, Perplexity gibi LLMlerin içeriklerimizi verimli anlayabilmesi ve kullanıcılara sunabilmesi için uygun içerik optimizasyon önerilierini paylaşmalısın.
 
 **ÖNEMLI:** Yukarıdaki format tamamen korunmalı ve her analiz için aynı yapı kullanılmalıdır. Başlık numaraları, alt başlık yapısı ve "Faydası Nedir?" bölümleri değiştirilmemelidir.
 
-## Dikkat Edilmesi Gerekenler:
-
-1. Oggusto.com sitesi blog mülkünde **E.E.A.T kriterlerine uygun içerikler** üretmelidir.
-2. Oggusto.com sitesi yemek, tatil, cilt bakımı gibi kategoriler başta olmak üzere Affiliate yöntemi ile kullanıcılara ürünler önermektedir.
-4. Dolayısıyla Oggusto.com Your Money Your Life kriterlerini karşılayacak içerikler üretmek zorundadır.
-5. Yukarıdaki dikkat edilecek noktalardan hareketle, aşağıdaki bağlantıları okuyup Oggusto.com içeriklerini 100% E.E.A.T ve YMYL kriterlerini karşılayıp karşılamadığı yönünde öneriler ve analizler sunacaksın.
-5.1 https://developers.google.com/search/docs/fundamentals/creating-helpful-content
-5.2 https://static.googleusercontent.com/media/guidelines.raterhub.com/en//searchqualityevaluatorguidelines.pdf
+- Oggusto.com sitesi blog mülkünde **E.E.A.T kriterlerine uygun içerikler** üretmelidir.
+- Oggusto.com sitesi yemek, tatil, cilt bakımı gibi kategoriler başta olmak üzere Affiliate yöntemi ile kullanıcılara ürünler önermektedir.
+- Dolayısıyla Oggusto.com Your Money Your Life kriterlerini karşılayacak içerikler üretmek zorundadır.
+- Yukarıdaki dikkat edilecek noktalardan hareketle, aşağıdaki bağlantıları okuyup Oggusto.com içeriklerini 100% E.E.A.T ve YMYL kriterlerine karşılayıp karşılamadığı yönünde öneriler ve analizler sunacaksın.
+- https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+- https://static.googleusercontent.com/media/guidelines.raterhub.com/en//searchqualityevaluatorguidelines.pdf
 
 Lütfen tüm çıktıyı Türkçe olarak hazırla.
 
-- Çıktıyı markdown olarak ver.
+- Çıktıyı **mutlaka** geçerli ve düzgün bir markdown formatında ver.
 - AI modelinin yorumlarını aşağıdaki gibi çıktıya ekleme. Doğrudan sonucu ver.`;
 
 export const analyzeContent = async (url: string): Promise<string> => {
