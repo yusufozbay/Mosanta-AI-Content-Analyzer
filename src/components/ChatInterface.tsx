@@ -139,27 +139,6 @@ KULLANICI SORUSU: ${content}
 
   if (!analysisResults) return null;
 
-  // Add formatting function
-  function formatAnalysisResults(text: string): string {
-    // Normalize all label variants to a single format
-    let formatted = text
-      .replace(/(?:\*\*)?\s*Faydası Nedir\s*[:\uff1a]?\s*\*\*|\?:\*\*/gi, '\n**Faydası Nedir?:** ')
-      .replace(/(?:\*\*)?\s*Önerilen İçerik\s*[:\uff1a]?\s*\*\*|\?:\*\*/gi, '\n**Önerilen İçerik:** ');
-
-    // Remove duplicate label lines (keep only the first occurrence in each section)
-    formatted = formatted.replace(/(\n\*\*Faydası Nedir\?:\*\* )+/g, '\n**Faydası Nedir?:** ');
-    formatted = formatted.replace(/(\n\*\*Önerilen İçerik:\*\* )+/g, '\n**Önerilen İçerik:** ');
-
-    // Remove stray asterisks, colons, or whitespace at the start of lines
-    formatted = formatted.replace(/^[\*\s:]+/gm, '');
-
-    // Remove duplicate newlines
-    formatted = formatted.replace(/\n{2,}/g, '\n\n');
-
-    // Trim leading/trailing whitespace
-    return formatted.trim();
-  }
-
   return (
     <>
       {/* Chat Toggle Button */}
@@ -244,7 +223,7 @@ KULLANICI SORUSU: ${content}
                             code: ({ children }) => <code className="bg-gray-200 px-1 rounded text-xs">{children}</code>,
                           }}
                         >
-                          {formatAnalysisResults(message.content)}
+                          {message.content}
                         </ReactMarkdown>
                       ) : (
                         <p className="text-sm">{message.content}</p>

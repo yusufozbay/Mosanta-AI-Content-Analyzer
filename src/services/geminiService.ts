@@ -61,16 +61,12 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ### 2.2 Alt Başlık Yapısı Önerileri
 
 #### 2.2.1 [Alt başlık 1]
-Faydası Nedir?
-[Buraya fayda açıklaması]
-Önerilen İçerik:
-[Buraya içerik önerisi]
+**Faydası Nedir?** [Fayda açıklaması]
+**Önerilen İçerik:** [İçerik önerisi]
 
 #### 2.2.2 [Alt başlık 2]
-Faydası Nedir?
-[Buraya fayda açıklaması]
-Önerilen İçerik:
-[Buraya içerik önerisi]
+**Faydası Nedir?** [Fayda açıklaması]
+**Önerilen İçerik:** [İçerik önerisi]
 
 [Diğer alt başlıklar aynı formatta devam eder]
 
@@ -106,15 +102,13 @@ Faydası Nedir?
 
 **Faydası Nedir?** Kullanıcı deneyimini artırır ve arama motorlarında featured snippet olma şansını yükseltir.
 
-SSS bölümünde 10 adet soru-cevap önerisi üret.
-
 ### 4.1 [Soru 1]
 **Cevap:** [1-2 cümlelik net cevap]
 
 ### 4.2 [Soru 2]
 **Cevap:** [1-2 cümlelik net cevap]
 
-[10 soruya kadar devam eder]
+[5 soruya kadar devam eder]
 
 ## 5. Rakip İçerik Stratejileri
 
@@ -171,16 +165,18 @@ Aynı zamanda LLM büyük dil modellerinin içeriği anlayacağı ve ChatGPT, Cl
 
 **ÖNEMLI:** Yukarıdaki format tamamen korunmalı ve her analiz için aynı yapı kullanılmalıdır. Başlık numaraları, alt başlık yapısı ve "Faydası Nedir?" bölümleri değiştirilmemelidir.
 
-- Oggusto.com sitesi blog mülkünde **E.E.A.T kriterlerine uygun içerikler** üretmelidir.
-- Oggusto.com sitesi yemek, tatil, cilt bakımı gibi kategoriler başta olmak üzere Affiliate yöntemi ile kullanıcılara ürünler önermektedir.
-- Dolayısıyla Oggusto.com Your Money Your Life kriterlerini karşılayacak içerikler üretmek zorundadır.
-- Yukarıdaki dikkat edilecek noktalardan hareketle, aşağıdaki bağlantıları okuyup Oggusto.com içeriklerini 100% E.E.A.T ve YMYL kriterlerine karşılayıp karşılamadığı yönünde öneriler ve analizler sunacaksın.
-- https://developers.google.com/search/docs/fundamentals/creating-helpful-content
-- https://static.googleusercontent.com/media/guidelines.raterhub.com/en//searchqualityevaluatorguidelines.pdf
+## Dikkat Edilmesi Gerekenler:
+
+1. Oggusto.com sitesi blog mülkünde **E.E.A.T kriterlerine uygun içerikler** üretmelidir.
+2. Oggusto.com sitesi yemek, tatil, cilt bakımı gibi kategoriler başta olmak üzere Affiliate yöntemi ile kullanıcılara ürünler önermektedir.
+4. Dolayısıyla Oggusto.com Your Money Your Life kriterlerini karşılayacak içerikler üretmek zorundadır.
+5. Yukarıdaki dikkat edilecek noktalardan hareketle, aşağıdaki bağlantıları okuyup Oggusto.com içeriklerini 100% E.E.A.T ve YMYL kriterlerini karşılayıp karşılamadığı yönünde öneriler ve analizler sunacaksın.
+5.1 https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+5.2 https://static.googleusercontent.com/media/guidelines.raterhub.com/en//searchqualityevaluatorguidelines.pdf
 
 Lütfen tüm çıktıyı Türkçe olarak hazırla.
 
-- Çıktıyı **mutlaka** geçerli ve düzgün bir markdown formatında ver.
+- Çıktıyı markdown olarak ver.
 - AI modelinin yorumlarını aşağıdaki gibi çıktıya ekleme. Doğrudan sonucu ver.`;
 
 export const analyzeContent = async (url: string): Promise<string> => {
