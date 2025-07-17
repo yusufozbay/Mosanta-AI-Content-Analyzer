@@ -234,11 +234,25 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   {children}
                 </h4>
               ),
-              p: ({ children }) => (
-                <p className="text-gray-800 mb-4 leading-relaxed text-base">
-                  {children}
-                </p>
-              ),
+              p: ({ children }) => {
+                // Custom split for 'Faydası Nedir?' and 'Önerilen İçerik:'
+                const text = children && typeof children[0] === 'string' ? children[0] : null;
+                if (text && (text.startsWith('Faydası Nedir?') || text.startsWith('Önerilen İçerik:'))) {
+                  const [label, ...rest] = text.split(/[:：]/);
+                  const restText = rest.join(':').trim();
+                  return (
+                    <div className="mt-4 mb-2">
+                      <span className="block font-bold text-gray-900 text-base mb-1">{label}:</span>
+                      {restText && <span className="block text-gray-800 text-base mb-2">{restText}</span>}
+                    </div>
+                  );
+                }
+                return (
+                  <p className="text-gray-800 mb-4 leading-relaxed text-base">
+                    {children}
+                  </p>
+                );
+              },
               ul: ({ children }) => (
                 <ul className="list-disc ml-6 text-gray-800 mb-4 space-y-2">
                   {children}
