@@ -188,64 +188,19 @@ export const getCompetitors = async (targetUrl: string): Promise<CompetitorData[
 
 export const fetchCompetitorContent = async (url: string): Promise<string> => {
   try {
-    // Try multiple CORS proxy services for better reliability
-    const proxies = [
-      `https://corsproxy.io/?${encodeURIComponent(url)}`,
-      `https://cors-anywhere.herokuapp.com/${url}`,
-      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
-    ];
-    
-    let htmlContent = '';
-    let lastError = null;
-    
-    // Try each proxy service until one works
-    for (const proxyUrl of proxies) {
-      try {
-        const response = await fetch(proxyUrl, {
-          method: 'GET',
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-          }
-        });
-        
-        if (response.ok) {
-          const data = await response.text();
-          htmlContent = data;
-          break;
-        }
-      } catch (error) {
-        lastError = error;
-        continue;
-      }
+    const response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    if (!response.ok) {
+      throw new Error(`İçerik çekilirken bir hata oluştu. Lütfen URL'nin doğru olduğundan emin olun.`);
     }
-    
-    // If all proxies failed, return a fallback message
-    if (!htmlContent) {
-      console.warn(`All CORS proxies failed for ${url}:`, lastError);
-      return `Content from ${new URL(url).hostname} could not be fetched due to CORS restrictions. This is a common limitation when accessing external websites directly from the browser.`;
-    }
-    
-    // Extract text content from HTML
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, 'text/html');
-    
-    // Remove script and style elements
-    const scripts = doc.querySelectorAll('script, style, nav, header, footer, aside');
-    scripts.forEach(el => el.remove());
-    
-    // Get main content
-    const mainContent = doc.querySelector('main, article, .content, .post, .entry') || doc.body;
-    const textContent = mainContent?.textContent || '';
-    
-    // Clean and limit content
-    return textContent
-      .replace(/\s+/g, ' ')
-      .trim()
-      .substring(0, 3000); // Limit to 3000 characters
-      
+    const data = await response.json();
+    // Assume backend returns { content }
+    return data.content;
   } catch (error) {
     console.error(`Error fetching content from ${url}:`, error);
-    const domain = new URL(url).hostname;
-    return `Content from ${domain} could not be fetched due to network restrictions. This is a common limitation when accessing external websites directly from the browser.`;
+    return `Content from ${url} could not be fetched due to network restrictions.`;
   }
 };
