@@ -1,7 +1,11 @@
 [build]
   functions = "netlify/functions"
-
+ 
 [[redirects]]
   from = "/api/analyze"
   to = "/.netlify/functions/analyze"
+  status = 200 
+[[redirects]]
+  from = "/api/share"
+  to = "/.netlify/functions/share"
   status = 200 

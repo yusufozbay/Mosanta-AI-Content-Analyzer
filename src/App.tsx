@@ -1,9 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import Header from './components/Header';
 import AnalysisForm from './components/AnalysisForm';
 import ResultsDisplay from './components/ResultsDisplay';
 import { analyzeContent } from './services/geminiService';
 import { extractContentFromUrl } from './services/contentExtractorService';
+
+function SharedResult() {
+  const { id } = useParams();
+  const [result, setResult] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    fetch(`/api/share?id=${id}`)
+      .then(res => res.ok ? res.json() : Promise.reject(res))
+      .then(data => setResult(data.result))
+      .catch(() => setError('Paylaşılmış analiz bulunamadı veya süresi doldu.'))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <Header />
+      <main className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <ResultsDisplay
+            results={result || ''}
+            isLoading={loading}
+            error={error}
+            analyzedUrl={''}
+            extractedContent={null}
+          />
+        </div>
+      </main>
+    </div>
+  );
+}
 
 function App() {
   const [results, setResults] = useState<string>('');
@@ -39,30 +74,35 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <Header />
-      
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <AnalysisForm onAnalyze={handleAnalyze} isLoading={isLoading} />
-          <ResultsDisplay 
-            results={results} 
-            isLoading={isLoading} 
-            error={error} 
-            analyzedUrl={analyzedUrl}
-            extractedContent={extractedContent}
-          />
-        </div>
-      </main>
-
-      <footer className="bg-gray-800 text-white py-6 mt-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-400">
-            © 2025 Mosanta AI
-          </p>
-        </div>
-      </footer>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={
+          <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+            <Header />
+            <main className="container mx-auto px-4 py-8">
+              <div className="max-w-4xl mx-auto">
+                <AnalysisForm onAnalyze={handleAnalyze} isLoading={isLoading} />
+                <ResultsDisplay 
+                  results={results} 
+                  isLoading={isLoading} 
+                  error={error} 
+                  analyzedUrl={analyzedUrl}
+                  extractedContent={extractedContent}
+                />
+              </div>
+            </main>
+            <footer className="bg-gray-800 text-white py-6 mt-12">
+              <div className="container mx-auto px-4 text-center">
+                <p className="text-gray-400">
+                  © 2025 Mosanta AI
+                </p>
+              </div>
+            </footer>
+          </div>
+        } />
+        <Route path="/share/:id" element={<SharedResult />} />
+      </Routes>
+    </Router>
   );
 }
 

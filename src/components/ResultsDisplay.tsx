@@ -3,6 +3,7 @@ import { CheckCircle, AlertTriangle, FileText } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import ExportShareButtons from './ExportShareButtons';
 import ChatInterface from './ChatInterface';
+import { useState } from 'react';
 
 interface ResultsDisplayProps {
   results: string;
@@ -16,7 +17,47 @@ interface ResultsDisplayProps {
   };
 }
 
-const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, isLoading, error, analyzedUrl = '', extractedContent }) => {
+const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
+  results,
+  isLoading,
+  error,
+  analyzedUrl,
+  extractedContent
+}) => {
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [shareLoading, setShareLoading] = useState(false);
+  const [shareError, setShareError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    setShareLoading(true);
+    setShareError(null);
+    setCopied(false);
+    try {
+      const response = await fetch('/api/share', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ result: results })
+      });
+      if (!response.ok) {
+        throw new Error('Paylaşılabilir bağlantı oluşturulamadı.');
+      }
+      const data = await response.json();
+      setShareUrl(data.url);
+    } catch (err) {
+      setShareError('Paylaşım bağlantısı oluşturulamadı.');
+    } finally {
+      setShareLoading(false);
+    }
+  };
+
+  const handleCopy = () => {
+    if (shareUrl) {
+      navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -106,6 +147,37 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ results, isLoading, err
       </div>
 
       <ExportShareButtons results={results} url={analyzedUrl} />
+
+      {/* Shareable Link Section */}
+      {results && !isLoading && !error && (
+        <div className="mb-6">
+          <button
+            onClick={handleShare}
+            disabled={shareLoading || !!shareUrl}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {shareLoading ? 'Bağlantı oluşturuluyor...' : shareUrl ? 'Bağlantı oluşturuldu' : 'Paylaşılabilir Bağlantı Oluştur'}
+          </button>
+          {shareError && <div className="text-red-600 mt-2">{shareError}</div>}
+          {shareUrl && (
+            <div className="mt-3 flex items-center space-x-2">
+              <input
+                type="text"
+                value={shareUrl}
+                readOnly
+                className="w-full px-3 py-2 border rounded text-sm bg-gray-50"
+                onFocus={e => e.target.select()}
+              />
+              <button
+                onClick={handleCopy}
+                className="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded text-sm font-medium"
+              >
+                {copied ? 'Kopyalandı!' : 'Kopyala'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {extractedContent && (
         <div className="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
