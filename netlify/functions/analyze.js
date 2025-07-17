@@ -21,9 +21,11 @@ exports.handler = async function(event, context) {
     const serpApiUrl = `https://serpapi.com/search?engine=google&api_key=${serpApiKey}&url=${encodeURIComponent(url)}`;
     const htmlResponse = await fetch(serpApiUrl);
     if (!htmlResponse.ok) {
+      const errorText = await htmlResponse.text();
+      console.error('SerpAPI error:', errorText);
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Failed to fetch URL via SerpAPI' })
+        body: JSON.stringify({ error: 'Failed to fetch URL via SerpAPI', details: errorText })
       };
     }
     const html = await htmlResponse.text();
