@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { JSDOM } = require('jsdom');
+const cheerio = require('cheerio');
 
 exports.handler = async function(event, context) {
   if (event.httpMethod !== 'POST') {
@@ -27,9 +27,8 @@ exports.handler = async function(event, context) {
       });
       if (directRes.ok) {
         const html = await directRes.text();
-        const dom = new JSDOM(html);
-        const h1 = dom.window.document.querySelector('h1');
-        h1Text = h1 ? h1.textContent.trim() : '';
+        const $ = cheerio.load(html);
+        h1Text = $('h1').first().text().trim();
       }
     } catch (err) {
       // Ignore direct fetch error, fallback to SerpAPI
@@ -118,10 +117,10 @@ exports.handler = async function(event, context) {
         body: JSON.stringify({ error: 'Failed to fetch page HTML via SerpAPI search.', serpQuery, usedFallbackQuery, serpResults: serpData.organic_results?.map(r => r.link) })
       };
     }
-    // Extract <body> content
-    const dom = new JSDOM(pageHtml);
-    const bodyText = dom.window.document.body.textContent || '';
-    if (!bodyText.trim()) {
+    // Extract <body> content using cheerio
+    const $ = cheerio.load(pageHtml);
+    const bodyText = $('body').text().trim();
+    if (!bodyText) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'No <body> content found', serpQuery, usedFallbackQuery })
