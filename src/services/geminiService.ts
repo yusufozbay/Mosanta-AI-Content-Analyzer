@@ -108,7 +108,31 @@ Bu analiz sırasında aşağıdaki rakip siteler incelendi:
 ### 4.2 [Soru 2]
 **Cevap:** [1-2 cümlelik net cevap]
 
-[5 soruya kadar devam eder]
+### 4.3 [Soru 3]
+**Cevap:** [1-2 cümlelik net cevap]
+
+### 4.4 [Soru 4]
+**Cevap:** [1-2 cümlelik net cevap]
+
+### 4.5 [Soru 5]
+**Cevap:** [1-2 cümlelik net cevap]
+
+### 4.6 [Soru 6]
+**Cevap:** [1-2 cümlelik net cevap]
+
+### 4.7 [Soru 7]
+**Cevap:** [1-2 cümlelik net cevap]
+
+### 4.8 [Soru 8]
+**Cevap:** [1-2 cümlelik net cevap]
+
+### 4.9 [Soru 9]
+**Cevap:** [1-2 cümlelik net cevap]
+
+### 4.10 [Soru 10]
+**Cevap:** [1-2 cümlelik net cevap]
+
+[10 soruya kadar devam eder]
 
 ## 5. Rakip İçerik Stratejileri
 
