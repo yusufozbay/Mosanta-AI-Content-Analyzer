@@ -18,6 +18,7 @@ exports.handler = async function(event, context) {
     }
     // Try to fetch the page directly to get the H1
     let h1Text = '';
+    let usedFallbackQuery = false;
     try {
       const directRes = await fetch(url, {
         headers: {
@@ -33,29 +34,68 @@ exports.handler = async function(event, context) {
     } catch (err) {
       // Ignore direct fetch error, fallback to SerpAPI
     }
-    if (!h1Text) {
+    // Fallback: use URL pathname as query if H1 is missing
+    let serpQuery = h1Text;
+    if (!serpQuery) {
+      try {
+        const parsedUrl = new URL(url);
+        serpQuery = decodeURIComponent(parsedUrl.pathname.replace(/\//g, ' ').replace(/-/g, ' ')).trim();
+        usedFallbackQuery = true;
+      } catch (e) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: 'Failed to extract H1 and fallback query from URL.' })
+        };
+      }
+    }
+    if (!serpQuery) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Failed to extract H1 from the target URL. Cannot proceed with SerpAPI.' })
+        body: JSON.stringify({ error: 'Failed to extract H1 or fallback query from the target URL. Cannot proceed with SerpAPI.' })
       };
     }
-    // Use SerpAPI to search for the page using the H1 as the query
+    // Use SerpAPI to search for the page using the H1 or fallback as the query
     const serpApiKey = process.env.SERPAPI_KEY;
-    const serpApiUrl = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(h1Text)}&api_key=${serpApiKey}`;
+    const serpApiUrl = `https://serpapi.com/search.json?engine=google&q=${encodeURIComponent(serpQuery)}&api_key=${serpApiKey}`;
     const serpRes = await fetch(serpApiUrl);
     if (!serpRes.ok) {
       const errorText = await serpRes.text();
       console.error('SerpAPI error:', errorText);
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Failed to fetch from SerpAPI', details: errorText })
+        body: JSON.stringify({ error: 'Failed to fetch from SerpAPI', details: errorText, serpQuery, usedFallbackQuery })
       };
     }
     const serpData = await serpRes.json();
-    // Try to find the matching result
+    // Try to find the matching result (domain and path similarity)
     let pageHtml = '';
+    let match = null;
     if (serpData.organic_results && Array.isArray(serpData.organic_results)) {
-      const match = serpData.organic_results.find(r => r.link && r.link.includes(url));
+      const inputDomain = (new URL(url)).hostname.replace(/^www\./, '');
+      match = serpData.organic_results.find(r => {
+        if (!r.link) return false;
+        try {
+          const resultUrl = new URL(r.link);
+          const resultDomain = resultUrl.hostname.replace(/^www\./, '');
+          // Check domain match and path similarity
+          return resultDomain === inputDomain && r.link.includes(url.split('?')[0]);
+        } catch {
+          return false;
+        }
+      });
+      if (!match) {
+        // Fallback: match by domain only
+        match = serpData.organic_results.find(r => {
+          if (!r.link) return false;
+          try {
+            const resultUrl = new URL(r.link);
+            const resultDomain = resultUrl.hostname.replace(/^www\./, '');
+            return resultDomain === inputDomain;
+          } catch {
+            return false;
+          }
+        });
+      }
       if (match && match.link) {
         // Try to fetch the HTML of the matched result
         try {
@@ -75,7 +115,7 @@ exports.handler = async function(event, context) {
     if (!pageHtml) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'Failed to fetch page HTML via SerpAPI search.' })
+        body: JSON.stringify({ error: 'Failed to fetch page HTML via SerpAPI search.', serpQuery, usedFallbackQuery, serpResults: serpData.organic_results?.map(r => r.link) })
       };
     }
     // Extract <body> content
@@ -84,14 +124,14 @@ exports.handler = async function(event, context) {
     if (!bodyText.trim()) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: 'No <body> content found' })
+        body: JSON.stringify({ error: 'No <body> content found', serpQuery, usedFallbackQuery })
       };
     }
     // Prepare response (can be extended for title, etc.)
     return {
       statusCode: 200,
       body: JSON.stringify({
-        title: h1Text,
+        title: h1Text || serpQuery,
         content: bodyText,
         url
       })

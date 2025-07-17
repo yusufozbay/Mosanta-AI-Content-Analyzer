@@ -134,7 +134,12 @@ KULLANICI SORUSU: ${content}
     "Rakiplerimden nasıl öne geçebilirim?",
     "İçeriğimi nasıl optimize edebilirim?",
     "Hangi anahtar kelimelere odaklanmalıyım?",
-    "E-A-T skorumu nasıl artırabilirim?"
+    "E-A-T skorumu nasıl artırabilirim?",
+    "Sitemde hangi teknik SEO iyileştirmeleri önerirsiniz?",
+    "İçerik uzunluğu yeterli mi?",
+    "Daha fazla trafik için ne yapmalıyım?",
+    "Featured snippet için nasıl optimize edebilirim?",
+    "Rakiplerimin kullandığı stratejiler neler?"
   ];
 
   if (!analysisResults) return null;
@@ -179,7 +184,7 @@ KULLANICI SORUSU: ${content}
                 <p className="text-sm mb-4">Analiz sonuçları hakkında soru sorabilirsiniz</p>
                 <div className="space-y-2">
                   <p className="text-xs font-medium text-gray-600 mb-2">Örnek sorular:</p>
-                  {suggestedQuestions.slice(0, 3).map((question, index) => (
+                  {suggestedQuestions.slice(0, 5).map((question, index) => (
                     <button
                       key={index}
                       onClick={() => sendMessage(question)}
@@ -270,7 +275,7 @@ KULLANICI SORUSU: ${content}
             
             {messages.length === 0 && (
               <div className="mt-2 flex flex-wrap gap-1">
-                {suggestedQuestions.slice(3).map((question, index) => (
+                {suggestedQuestions.slice(5).map((question, index) => (
                   <button
                     key={index}
                     onClick={() => sendMessage(question)}
