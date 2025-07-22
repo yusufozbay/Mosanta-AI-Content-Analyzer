@@ -7,20 +7,36 @@ exports.handler = async function(event, context) {
     if (!serpApiKey) {
       return { statusCode: 500, body: 'SerpApi key is missing' };
     }
-    const params = new URLSearchParams({
-      engine: 'google',
-      q,
-      gl: 'tr',
-      hl: 'tr',
-      device: 'mobile',
-      api_key: serpApiKey
-    });
-    const serpApiUrl = `https://serpapi.com/search.json?${params.toString()}`;
-    const response = await fetch(serpApiUrl);
-    const data = await response.text();
+    // Helper to fetch a page
+    async function fetchSerpPage(page) {
+      const params = new URLSearchParams({
+        engine: 'google',
+        q,
+        gl: 'tr',
+        hl: 'tr',
+        device: 'mobile',
+        api_key: serpApiKey,
+        start: page === 2 ? '10' : undefined // page 2 starts at result 11
+      });
+      const serpApiUrl = `https://serpapi.com/search.json?${params.toString()}`;
+      const response = await fetch(serpApiUrl);
+      if (!response.ok) throw new Error('SerpApi error');
+      return await response.json();
+    }
+    // Fetch first page
+    const data1 = await fetchSerpPage(1);
+    let organic = Array.isArray(data1.organic_results) ? data1.organic_results : [];
+    // If less than 10, fetch second page and combine
+    if (organic.length < 10) {
+      const data2 = await fetchSerpPage(2);
+      if (Array.isArray(data2.organic_results)) {
+        organic = organic.concat(data2.organic_results);
+      }
+    }
+    // Return only up to 20 results (max 2 pages)
     return {
-      statusCode: response.ok ? 200 : 500,
-      body: data
+      statusCode: 200,
+      body: JSON.stringify({ organic_results: organic.slice(0, 20) })
     };
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
