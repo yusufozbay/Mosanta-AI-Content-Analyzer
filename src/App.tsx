@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import Header from './components/Header';
 import AnalysisForm from './components/AnalysisForm';
@@ -51,6 +51,9 @@ function App() {
     url: string;
   } | null>(null);
 
+  // Add ref for analysis progress section
+  const analysisProgressRef = useRef<HTMLDivElement>(null);
+
   const handleAnalyze = async (url: string) => {
     setIsLoading(true);
     setError(null);
@@ -58,11 +61,18 @@ function App() {
     setAnalyzedUrl(url);
     setExtractedContent(null);
 
+    // Scroll to analysis progress section
+    setTimeout(() => {
+      const el = document.getElementById('analysis-progress-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+
     try {
       // First extract content to show preview
       const content = await extractContentFromUrl(url);
       setExtractedContent(content);
-      
       // Then perform full analysis
       const analysis = await analyzeContent(url);
       setResults(analysis);
@@ -82,6 +92,8 @@ function App() {
             <main className="container mx-auto px-4 py-8">
               <div className="max-w-4xl mx-auto">
                 <AnalysisForm onAnalyze={handleAnalyze} isLoading={isLoading} />
+                {/* Add id to analysis progress section for scrolling */}
+                <div id="analysis-progress-section"></div>
                 <ResultsDisplay 
                   results={results} 
                   isLoading={isLoading} 

@@ -252,15 +252,18 @@ const getCompetitorsFromSerpApi = async (targetUrl: string): Promise<CompetitorD
           return false;
         }
       })
-      .slice(0, 10)
-      .map((item: any, idx: number): CompetitorData => ({
-        domain: (new URL(item.link)).hostname,
-        url: item.link,
-        title: item.title || '',
-        description: item.snippet || '',
-        rank: idx + 1
-      }));
-    return competitors;
+      .slice(0, 10); // Ensure always 10 competitors
+    if (competitors.length < 10) {
+      throw new Error('At least 10 competitors could not be found from SERP.');
+    }
+    const competitorList = competitors.map((item: any, idx: number): CompetitorData => ({
+      domain: (new URL(item.link)).hostname,
+      url: item.link,
+      title: item.title || '',
+      description: item.snippet || '',
+      rank: idx + 1
+    }));
+    return competitorList;
   } catch (error) {
     console.error('Error fetching competitors from SerpApi:', error);
     throw error;
