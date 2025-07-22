@@ -1,5 +1,13 @@
-import { getCompetitors, fetchCompetitorContent, CompetitorData } from './dataForSeoService';
 import { extractContentFromUrl } from './contentExtractorService';
+
+interface CompetitorData {
+  domain: string;
+  url: string;
+  title: string;
+  description: string;
+  rank: number;
+  content?: string;
+}
 
 const GEMINI_API_KEY = 'AIzaSyBT5sxoLqCKH-8kTUt3hZBRdo2UtgqZjKM';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
@@ -217,46 +225,81 @@ Lütfen tüm çıktıyı Türkçe olarak hazırla.
 - Çıktıyı markdown olarak ver.
 - AI modelinin yorumlarını aşağıdaki gibi çıktıya ekleme. Doğrudan sonucu ver.`;
 
+// New: Fetch competitors using SerpApi
+const getCompetitorsFromSerpApi = async (targetUrl: string): Promise<CompetitorData[]> => {
+  try {
+    // Extract keyword from the H1 of the page (or fallback to last URL segment)
+    const extracted = await extractContentFromUrl(targetUrl);
+    const h1 = extracted.title || '';
+    const serpApiKey = import.meta.env.VITE_SERPAPI_KEY || '';
+    if (!serpApiKey) throw new Error('SerpApi key is missing');
+    const params = new URLSearchParams({
+      engine: 'google',
+      q: h1,
+      gl: 'tr',
+      hl: 'tr',
+      device: 'mobile',
+      api_key: serpApiKey
+    });
+    const serpApiUrl = `https://serpapi.com/search.json?${params.toString()}`;
+    const response = await fetch(serpApiUrl);
+    if (!response.ok) throw new Error('SerpApi error');
+    const data = await response.json();
+    if (!data.organic_results) throw new Error('No SERP results found');
+    const inputDomain = (new URL(targetUrl)).hostname.replace(/^www\./, '');
+    // Filter out the analyzed domain from competitors
+    const competitors = data.organic_results
+      .filter((item: any) => {
+        if (!item.link) return false;
+        try {
+          const resultDomain = (new URL(item.link)).hostname.replace(/^www\./, '');
+          return resultDomain !== inputDomain;
+        } catch {
+          return false;
+        }
+      })
+      .slice(0, 10)
+      .map((item: any, idx: number): CompetitorData => ({
+        domain: (new URL(item.link)).hostname,
+        url: item.link,
+        title: item.title || '',
+        description: item.snippet || '',
+        rank: idx + 1
+      }));
+    return competitors;
+  } catch (error) {
+    console.error('Error fetching competitors from SerpApi:', error);
+    throw error;
+  }
+};
+
 export const analyzeContent = async (url: string): Promise<string> => {
   try {
     // Extract main content from the URL
     const extractedContent = await extractContentFromUrl(url);
-    
-    // First, get competitors from DataForSEO
-    const competitors = await getCompetitors(url);
-    
+    // Get competitors from SerpApi (not DataForSEO)
+    const competitors = await getCompetitorsFromSerpApi(url);
     // Fetch content for each competitor (limit to first 5 for performance)
     const competitorAnalysis = await Promise.all(
       competitors.slice(0, 5).map(async (competitor) => {
-        const content = await fetchCompetitorContent(competitor.url);
+        // Optionally, fetch content for each competitor if needed (or skip for now)
         return {
           ...competitor,
-          content
+          content: '' // Not fetching full content for now
         };
       })
     );
-    
     // Format competitor data for the prompt
     const competitorData = competitorAnalysis.map((comp, index) => 
-      `### Rakip ${index + 1}: ${comp.domain} (Sıralama: ${comp.rank})
-**URL:** ${comp.url}
-**Başlık:** ${comp.title}
-**Açıklama:** ${comp.description}
-**İçerik Özeti:** ${comp.content.substring(0, 1000)}...
-
-`).join('');
-
+      `### Rakip ${index + 1}: ${comp.domain} (Sıralama: ${comp.rank})\n**URL:** ${comp.url}\n**Başlık:** ${comp.title}\n**Açıklama:** ${comp.description}\n**İçerik Özeti:** ${comp.content?.substring(0, 1000) || ''}...\n\n`).join('');
     // Create competitor URLs list for the final output
     const competitorUrlsList = competitorAnalysis.map((comp, index) => 
       `${index + 1}. **${comp.domain}** (Sıralama: ${comp.rank}) - [${comp.title}](${comp.url})`
     ).join('\n');
-
     const prompt = `${SYSTEM_PROMPT}\n\nAnaliz edilecek URL: ${url}\n\n**Sayfa Başlığı:** ${extractedContent.title}\n\nLütfen bu URL'deki içeriği yukarıdaki kriterlere göre analiz et ve öneriler sun.`;
-    
     const finalPrompt = prompt
       .replace('{{COMPETITOR_DATA}}', competitorData)
       .replace('{{MAIN_CONTENT}}', extractedContent.content);
-
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
@@ -294,23 +337,17 @@ export const analyzeContent = async (url: string): Promise<string> => {
         ]
       })
     });
-
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(`Gemini API error: ${errorData.error?.message || 'Unknown error'}`);
     }
-
     const data = await response.json();
-    
     if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
       throw new Error('No content received from Gemini API');
     }
-
     const analysisResult = data.candidates[0].content.parts[0].text;
-    
     // Replace competitor URLs placeholder in the analysis result
     const finalResult = analysisResult.replace('[Rakip listesi buraya gelecek]', competitorUrlsList);
-
     return finalResult;
   } catch (error) {
     console.error('Error analyzing content:', error);

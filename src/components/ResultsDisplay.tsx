@@ -179,7 +179,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         </div>
       )}
 
-      {extractedContent && (
+      {/* {extractedContent && (
         <div className="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h4 className="text-lg font-semibold text-blue-900 mb-3 flex items-center">
             <FileText className="w-5 h-5 mr-2" />
@@ -189,7 +189,8 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
             <h5 className="font-semibold text-gray-900 mb-2">Sayfa Başlığı:</h5>
             <p className="text-gray-800 mb-4">{extractedContent.title}</p>
             
-            <h5 className="font-semibold text-gray-900 mb-2">İçerik Özeti:</h5>
+            <h5 className="font-semibold text-gray-900 mb-2">
+İçerik Özeti:</h5>
             <div className="max-h-40 overflow-y-auto text-sm text-gray-700 bg-gray-50 p-3 rounded border">
               <ReactMarkdown
                 components={{
@@ -208,7 +209,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       <div className="prose prose-lg max-w-none prose-headings:text-gray-800 prose-p:text-gray-700 prose-strong:text-gray-800 prose-ul:text-gray-700 prose-ol:text-gray-700">
         <div id="analysis-results" className="bg-gray-50 rounded-lg p-6 border border-gray-200 markdown-content">
