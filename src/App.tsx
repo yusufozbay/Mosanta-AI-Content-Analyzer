@@ -61,9 +61,9 @@ function App() {
     setAnalyzedUrl(url);
     setExtractedContent(null);
 
-    // Scroll to analysis progress section
+    // Scroll to progress bar section (red line)
     setTimeout(() => {
-      const el = document.getElementById('analysis-progress-section');
+      const el = document.getElementById('analysis-progress-bar');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }

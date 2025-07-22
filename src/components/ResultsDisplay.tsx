@@ -66,7 +66,12 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           <span className="text-lg text-gray-600">Rakipler tespit ediliyor...</span>
         </div>
-        
+        {/* Progress Bar Section */}
+        <div id="analysis-progress-bar" className="w-full my-6">
+          <div className="relative h-2 bg-pink-200 rounded-full overflow-hidden">
+            <div className="absolute left-0 top-0 h-2 bg-pink-500 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+          </div>
+        </div>
         <div className="space-y-4">
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <div className="flex items-center space-x-2 mb-2">
@@ -90,7 +95,6 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
               <span className="text-sm text-gray-600">5. AI ile kapsamlı analiz</span>
             </div>
           </div>
-          
           <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
           <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
           <div className="h-4 bg-gray-200 rounded animate-pulse w-1/2"></div>
@@ -242,10 +246,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   const [label, ...rest] = text.split(/[:：]/);
                   const restText = rest.join(':').trim();
                   return (
-                    <div className="mt-4 mb-2">
-                      <span className="block font-bold text-gray-900 text-base mb-1">{label}:</span>
-                      {restText && <span className="block text-gray-800 text-base mb-2">{restText}</span>}
-                    </div>
+                    <>
+                      <p className="block font-bold text-gray-900 text-base mb-1">{label}:</p>
+                      {restText && <p className="block text-gray-800 text-base mb-2">{restText}</p>}
+                    </>
                   );
                 }
                 return (
@@ -271,10 +275,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   const [label, ...rest] = text.split(/[:：]/);
                   const restText = rest.join(':').trim();
                   return (
-                    <div className="mt-4 mb-2">
-                      <span className="block font-bold text-gray-900 text-base mb-1">{label}:</span>
-                      {restText && <span className="block text-gray-800 text-base mb-2">{restText}</span>}
-                    </div>
+                    <>
+                      <p className="block font-bold text-gray-900 text-base mb-1">{label}:</p>
+                      {restText && <p className="block text-gray-800 text-base mb-2">{restText}</p>}
+                    </>
                   );
                 }
                 return (
