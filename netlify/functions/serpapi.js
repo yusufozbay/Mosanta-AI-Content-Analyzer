@@ -15,9 +15,11 @@ exports.handler = async function(event, context) {
         gl: 'tr',
         hl: 'tr',
         device: 'mobile',
-        api_key: serpApiKey,
-        start: page === 2 ? '10' : undefined // page 2 starts at result 11
+        api_key: serpApiKey
       });
+      if (page === 2) {
+        params.set('start', '10');
+      }
       const serpApiUrl = `https://serpapi.com/search.json?${params.toString()}`;
       const response = await fetch(serpApiUrl);
       const text = await response.text();
