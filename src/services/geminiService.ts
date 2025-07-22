@@ -231,19 +231,12 @@ const getCompetitorsFromSerpApi = async (targetUrl: string): Promise<CompetitorD
     // Extract keyword from the H1 of the page (or fallback to last URL segment)
     const extracted = await extractContentFromUrl(targetUrl);
     const h1 = extracted.title || '';
-    // Always use VITE_SERPAPI_KEY for frontend
-    const serpApiKey = import.meta.env.VITE_SERPAPI_KEY;
-    if (!serpApiKey) throw new Error('SerpApi key is missing');
-    const params = new URLSearchParams({
-      engine: 'google',
-      q: h1,
-      gl: 'tr',
-      hl: 'tr',
-      device: 'mobile',
-      api_key: serpApiKey
+    // Call the Netlify function instead of SerpApi directly
+    const response = await fetch('/.netlify/functions/serpapi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q: h1 })
     });
-    const serpApiUrl = `https://serpapi.com/search.json?${params.toString()}`;
-    const response = await fetch(serpApiUrl);
     if (!response.ok) throw new Error('SerpApi error');
     const data = await response.json();
     if (!data.organic_results) throw new Error('No SERP results found');
