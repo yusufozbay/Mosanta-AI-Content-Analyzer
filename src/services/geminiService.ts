@@ -231,7 +231,8 @@ const getCompetitorsFromSerpApi = async (targetUrl: string): Promise<CompetitorD
     // Extract keyword from the H1 of the page (or fallback to last URL segment)
     const extracted = await extractContentFromUrl(targetUrl);
     const h1 = extracted.title || '';
-    const serpApiKey = import.meta.env.VITE_SERPAPI_KEY || '';
+    // Always use VITE_SERPAPI_KEY for frontend
+    const serpApiKey = import.meta.env.VITE_SERPAPI_KEY;
     if (!serpApiKey) throw new Error('SerpApi key is missing');
     const params = new URLSearchParams({
       engine: 'google',
