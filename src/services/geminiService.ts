@@ -252,9 +252,10 @@ const getCompetitorsFromSerpApi = async (targetUrl: string): Promise<CompetitorD
           return false;
         }
       })
-      .slice(0, 10); // Ensure always 10 competitors
-    if (competitors.length < 10) {
-      throw new Error('At least 10 competitors could not be found from SERP.');
+      .slice(0, 10); // Take up to 10 competitors
+    // Proceed with however many competitors are available
+    if (competitors.length === 0) {
+      throw new Error('No competitors could be found from SERP.');
     }
     const competitorList = competitors.map((item: any, idx: number): CompetitorData => ({
       domain: (new URL(item.link)).hostname,
