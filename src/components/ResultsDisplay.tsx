@@ -236,9 +236,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 </h4>
               ),
               p: ({ children }) => {
-                // Custom split for 'Faydası Nedir?' and 'Önerilen İçerik:'
+                // Custom split for 'Faydası Nedir?', 'Önerilen İçerik:', and 'Önerilen Başlık:'
                 const text = children && typeof children[0] === 'string' ? children[0] : null;
-                if (text && (text.startsWith('Faydası Nedir?') || text.startsWith('Önerilen İçerik:'))) {
+                if (text && (text.startsWith('Faydası Nedir?') || text.startsWith('Önerilen İçerik:') || text.startsWith('Önerilen Başlık:'))) {
                   const [label, ...rest] = text.split(/[:：]/);
                   const restText = rest.join(':').trim();
                   return (
@@ -265,9 +265,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 </ol>
               ),
               li: ({ children }) => {
-                // Custom split for 'Faydası Nedir?' and 'Önerilen İçerik:' in list items
+                // Custom split for 'Faydası Nedir?', 'Önerilen İçerik:', and 'Önerilen Başlık:' in list items
                 const text = children && typeof children[0] === 'string' ? children[0] : null;
-                if (text && (text.trim().startsWith('Faydası Nedir?') || text.trim().startsWith('Önerilen İçerik:'))) {
+                if (text && (text.trim().startsWith('Faydası Nedir?') || text.trim().startsWith('Önerilen İçerik:') || text.trim().startsWith('Önerilen Başlık:'))) {
                   const [label, ...rest] = text.split(/[:：]/);
                   const restText = rest.join(':').trim();
                   return (
