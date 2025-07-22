@@ -8,7 +8,7 @@ exports.handler = async function(event, context) {
       return { statusCode: 500, body: 'SerpApi key is missing' };
     }
     // Helper to fetch a page
-    async function fetchSerpPage(page) {
+    async function fetchSerpPage(start) {
       const params = new URLSearchParams({
         engine: 'google',
         q,
@@ -17,8 +17,8 @@ exports.handler = async function(event, context) {
         device: 'mobile',
         api_key: serpApiKey
       });
-      if (page === 2) {
-        params.set('start', '10');
+      if (start > 0) {
+        params.set('start', String(start));
       }
       const serpApiUrl = `https://serpapi.com/search.json?${params.toString()}`;
       const response = await fetch(serpApiUrl);
@@ -29,32 +29,34 @@ exports.handler = async function(event, context) {
       }
       return JSON.parse(text);
     }
-    // Fetch first page
-    const data1 = await fetchSerpPage(1);
-    if (data1.error) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'SerpApi error', details: data1.body })
-      };
-    }
-    let organic = Array.isArray(data1.organic_results) ? data1.organic_results : [];
-    // If less than 10, fetch second page and combine
-    if (organic.length < 10) {
-      const data2 = await fetchSerpPage(2);
-      if (data2.error) {
+    // Fetch pages until we have 10 unique competitors or no more results
+    let organic = [];
+    let seenUrls = new Set();
+    let start = 0;
+    let page = 1;
+    while (organic.length < 10 && page <= 5) { // up to 5 pages max
+      const data = await fetchSerpPage(start);
+      if (data.error) {
         return {
           statusCode: 500,
-          body: JSON.stringify({ error: 'SerpApi error', details: data2.body })
+          body: JSON.stringify({ error: 'SerpApi error', details: data.body })
         };
       }
-      if (Array.isArray(data2.organic_results)) {
-        organic = organic.concat(data2.organic_results);
+      const results = Array.isArray(data.organic_results) ? data.organic_results : [];
+      for (const item of results) {
+        if (item.link && !seenUrls.has(item.link)) {
+          organic.push(item);
+          seenUrls.add(item.link);
+          if (organic.length === 10) break;
+        }
       }
+      if (results.length === 0) break; // no more results
+      start += 10;
+      page++;
     }
-    // Return only up to 20 results (max 2 pages)
     return {
       statusCode: 200,
-      body: JSON.stringify({ organic_results: organic.slice(0, 20) })
+      body: JSON.stringify({ organic_results: organic.slice(0, 10) })
     };
   } catch (err) {
     console.error('Function error:', err);

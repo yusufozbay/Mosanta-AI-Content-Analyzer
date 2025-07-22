@@ -68,8 +68,10 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         </div>
         {/* Progress Bar Section */}
         <div id="analysis-progress-bar" className="w-full my-6">
-          <div className="relative h-2 bg-pink-200 rounded-full overflow-hidden">
-            <div className="absolute left-0 top-0 h-2 bg-pink-500 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+          <div className="relative h-4 bg-green-100 rounded-full overflow-hidden">
+            <div className="absolute left-0 top-0 h-4 bg-green-400 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+            {/* Shimmer effect */}
+            <div className="absolute left-0 top-0 h-4 w-1/3 bg-gradient-to-r from-green-200 via-green-100 to-green-200 opacity-60 animate-shimmer" style={{ animation: 'shimmer 1.5s infinite linear' }}></div>
           </div>
         </div>
         <div className="space-y-4">
