@@ -67,11 +67,12 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
           <span className="text-lg text-gray-600">Rakipler tespit ediliyor...</span>
         </div>
         {/* Progress Bar Section */}
-        <div id="analysis-progress-bar" className="w-full my-6">
-          <div className="relative h-4 bg-green-100 rounded-full overflow-hidden">
-            <div className="absolute left-0 top-0 h-4 bg-green-400 rounded-full animate-pulse" style={{ width: '60%' }}></div>
+        <div id="analysis-progress-bar" className="w-full my-6 flex justify-center">
+          <div className="relative w-3/4 h-6 bg-gray-200 rounded-full overflow-hidden shadow-inner border border-gray-300">
+            {/* Green progress fill with stripes */}
+            <div className="absolute left-0 top-0 h-6 rounded-full w-3/4 bg-green-400 bg-[repeating-linear-gradient(135deg,#a3e635_0_10px,#86efac_10px_20px)] transition-all duration-700"></div>
             {/* Shimmer effect */}
-            <div className="absolute left-0 top-0 h-4 w-1/3 bg-gradient-to-r from-green-200 via-green-100 to-green-200 opacity-60 animate-shimmer" style={{ animation: 'shimmer 1.5s infinite linear' }}></div>
+            <div className="absolute left-0 top-0 h-6 w-1/3 bg-gradient-to-r from-green-200 via-green-100 to-green-200 opacity-60 animate-shimmer" style={{ animation: 'shimmer 1.5s infinite linear' }}></div>
           </div>
         </div>
         <div className="space-y-4">

@@ -277,9 +277,9 @@ export const analyzeContent = async (url: string): Promise<string> => {
     const extractedContent = await extractContentFromUrl(url);
     // Get competitors from SerpApi (not DataForSEO)
     const competitors = await getCompetitorsFromSerpApi(url);
-    // Fetch content for each competitor (limit to first 5 for performance)
+    // Fetch content for each competitor (use all 10 for analysis)
     const competitorAnalysis = await Promise.all(
-      competitors.slice(0, 5).map(async (competitor) => {
+      competitors.map(async (competitor) => {
         // Optionally, fetch content for each competitor if needed (or skip for now)
         return {
           ...competitor,
