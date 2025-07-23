@@ -371,9 +371,8 @@ export const analyzeContent = async (url: string): Promise<string> => {
     // Replace competitor URLs placeholder in the analysis result
     const finalResult = analysisResult.replace('[Rakip listesi buraya gelecek]', competitorUrlsList);
     // After receiving Gemini API response, add token usage
-    const usageMeta = data.usageMetadata || data.candidates?.[0]?.usageMetadata;
-    if (usageMeta && usageMeta.totalTokens) {
-      addTokenUsage(usageMeta.totalTokens);
+    if (data.usageMetadata && typeof data.usageMetadata.totalTokenCount === 'number') {
+      addTokenUsage(data.usageMetadata.totalTokenCount);
       await logDailyTokenUsage();
     }
     return finalResult;
