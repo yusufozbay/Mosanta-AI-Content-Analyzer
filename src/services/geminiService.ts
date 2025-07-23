@@ -380,5 +380,3 @@ export const analyzeContent = async (url: string): Promise<string> => {
     throw error;
   }
 };
-
-export { logDailyTokenUsage };
