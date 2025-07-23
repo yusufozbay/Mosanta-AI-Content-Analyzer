@@ -93,13 +93,6 @@ function App() {
             <main className="container mx-auto px-4 py-8">
               <div className="max-w-4xl mx-auto">
                 <AnalysisForm onAnalyze={handleAnalyze} isLoading={isLoading} />
-                {/* TEMP: Button to trigger daily token log for quick test */}
-                <button
-                  onClick={logDailyTokenUsage}
-                  className="mt-4 mb-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded shadow"
-                >
-                  Günlük Token Logunu Google Sheet'e Gönder (Test)
-                </button>
                 {/* Add id to analysis progress section for scrolling */}
                 <div id="analysis-progress-section"></div>
                 <ResultsDisplay 

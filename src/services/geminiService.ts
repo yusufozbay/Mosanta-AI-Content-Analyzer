@@ -373,6 +373,7 @@ export const analyzeContent = async (url: string): Promise<string> => {
     const usageMeta = data.usageMetadata || data.candidates?.[0]?.usageMetadata;
     if (usageMeta && usageMeta.totalTokens) {
       addTokenUsage(usageMeta.totalTokens);
+      await logDailyTokenUsage();
     }
     return finalResult;
   } catch (error) {
