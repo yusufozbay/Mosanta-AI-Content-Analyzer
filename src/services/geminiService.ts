@@ -10,7 +10,7 @@ interface CompetitorData {
 }
 
 const GEMINI_API_KEY = 'AIzaSyBT5sxoLqCKH-8kTUt3hZBRdo2UtgqZjKM';
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent';
 
 const SYSTEM_PROMPT = `Görevin 20 yıllık çok deneyimli bir SEO uzmanı ve içerik yöneticisi olarak aşağıdaki bilgileri analiz etmektir.
 
