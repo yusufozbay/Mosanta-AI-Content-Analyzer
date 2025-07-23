@@ -51,6 +51,13 @@ function App() {
     content: string;
     url: string;
   } | null>(null);
+  const [tokenCount, setTokenCount] = useState(0);
+
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const key = `gemini_token_usage_${today}`;
+    setTokenCount(Number(localStorage.getItem(key) || '0'));
+  });
 
   // Add ref for analysis progress section
   const analysisProgressRef = useRef<HTMLDivElement>(null);
@@ -93,6 +100,10 @@ function App() {
             <main className="container mx-auto px-4 py-8">
               <div className="max-w-4xl mx-auto">
                 <AnalysisForm onAnalyze={handleAnalyze} isLoading={isLoading} />
+                {/* Show today's token count for debugging */}
+                <div className="mb-4 text-center text-green-700 font-bold">
+                  Bugünkü Token Count: {tokenCount}
+                </div>
                 {/* Add id to analysis progress section for scrolling */}
                 <div id="analysis-progress-section"></div>
                 <ResultsDisplay 
