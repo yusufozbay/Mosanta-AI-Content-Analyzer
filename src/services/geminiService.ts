@@ -271,6 +271,29 @@ const getCompetitorsFromSerpApi = async (targetUrl: string): Promise<CompetitorD
   }
 };
 
+// Track token usage in localStorage (for demo; use a DB for production)
+function addTokenUsage(count: number) {
+  const today = new Date().toISOString().slice(0, 10);
+  const key = `gemini_token_usage_${today}`;
+  const prev = Number(localStorage.getItem(key) || '0');
+  localStorage.setItem(key, String(prev + count));
+}
+
+// At the end of the day, send the total to the Netlify function
+export async function logDailyTokenUsage() {
+  const today = new Date().toISOString().slice(0, 10);
+  const key = `gemini_token_usage_${today}`;
+  const tokenCount = Number(localStorage.getItem(key) || '0');
+  if (tokenCount > 0) {
+    await fetch('/.netlify/functions/logTokensToSheet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date: today, tokenCount })
+    });
+    localStorage.removeItem(key);
+  }
+}
+
 export const analyzeContent = async (url: string): Promise<string> => {
   try {
     // Extract main content from the URL
@@ -346,9 +369,16 @@ export const analyzeContent = async (url: string): Promise<string> => {
     const analysisResult = data.candidates[0].content.parts[0].text;
     // Replace competitor URLs placeholder in the analysis result
     const finalResult = analysisResult.replace('[Rakip listesi buraya gelecek]', competitorUrlsList);
+    // After receiving Gemini API response, add token usage
+    const usageMeta = data.usageMetadata || data.candidates?.[0]?.usageMetadata;
+    if (usageMeta && usageMeta.totalTokens) {
+      addTokenUsage(usageMeta.totalTokens);
+    }
     return finalResult;
   } catch (error) {
     console.error('Error analyzing content:', error);
     throw error;
   }
 };
+
+export { logDailyTokenUsage };
