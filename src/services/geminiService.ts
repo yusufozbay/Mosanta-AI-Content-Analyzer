@@ -113,10 +113,11 @@ export const analyzeContent = async (url: string): Promise<string> => {
     const competitorUrlsList = competitorAnalysis.map((comp, index) => 
       `${index + 1}. **${comp.domain}** (Sıralama: ${comp.rank}) - [${comp.title}](${comp.url})`
     ).join('\n');
-    const prompt = `${SYSTEM_PROMPT}\n\nAnaliz edilecek URL: ${url}\n\n**Sayfa Başlığı:** ${extractedContent.title}\n\nLütfen bu URL'deki içeriği yukarıdaki kriterlere göre analiz et ve öneriler sun.`;
-    const finalPrompt = prompt
-      .replace('{{COMPETITOR_DATA}}', competitorData)
-      .replace('{{MAIN_CONTENT}}', extractedContent.content);
+    const competitorsList = competitors.map(c => c.url).join('\n');
+    const finalPrompt = SYSTEM_PROMPT
+      .replace(/{{\s*\$json\['Main Content'\]\s*}}/g, extractedContent.content)
+      .replace(/{{\s*\$json\['Organic Result'\]\s*}}/g, competitorsList)
+      .replace(/\{input_url\}/g, url);
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
