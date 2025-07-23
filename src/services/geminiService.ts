@@ -279,6 +279,12 @@ function addTokenUsage(count: number) {
   localStorage.setItem(key, String(prev + count));
 }
 
+export function getTodayTokenCount() {
+  const today = new Date().toISOString().slice(0, 10);
+  const key = `gemini_token_usage_${today}`;
+  return Number(localStorage.getItem(key) || '0');
+}
+
 // At the end of the day, send the total to the Netlify function
 export async function logDailyTokenUsage() {
   const today = new Date().toISOString().slice(0, 10);
@@ -370,9 +376,11 @@ export const analyzeContent = async (url: string): Promise<string> => {
     const analysisResult = data.candidates[0].content.parts[0].text;
     // Replace competitor URLs placeholder in the analysis result
     const finalResult = analysisResult.replace('[Rakip listesi buraya gelecek]', competitorUrlsList);
-    // After receiving Gemini API response, add token usage
+    // After receiving Gemini API response, add token usage and update UI
     if (data.usageMetadata && typeof data.usageMetadata.totalTokenCount === 'number') {
       addTokenUsage(data.usageMetadata.totalTokenCount);
+      // Update UI immediately (for React, trigger a custom event)
+      window.dispatchEvent(new Event('tokenCountUpdated'));
       await logDailyTokenUsage();
     }
     return finalResult;

@@ -5,7 +5,7 @@ import AnalysisForm from './components/AnalysisForm';
 import ResultsDisplay from './components/ResultsDisplay';
 import { analyzeContent } from './services/geminiService';
 import { extractContentFromUrl } from './services/contentExtractorService';
-import { logDailyTokenUsage } from './services/geminiService';
+import { logDailyTokenUsage, getTodayTokenCount } from './services/geminiService';
 
 function SharedResult() {
   const { id } = useParams();
@@ -51,13 +51,13 @@ function App() {
     content: string;
     url: string;
   } | null>(null);
-  const [tokenCount, setTokenCount] = useState(0);
+  const [tokenCount, setTokenCount] = useState(getTodayTokenCount());
 
   useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    const key = `gemini_token_usage_${today}`;
-    setTokenCount(Number(localStorage.getItem(key) || '0'));
-  });
+    const updateTokenCount = () => setTokenCount(getTodayTokenCount());
+    window.addEventListener('tokenCountUpdated', updateTokenCount);
+    return () => window.removeEventListener('tokenCountUpdated', updateTokenCount);
+  }, []);
 
   // Add ref for analysis progress section
   const analysisProgressRef = useRef<HTMLDivElement>(null);
