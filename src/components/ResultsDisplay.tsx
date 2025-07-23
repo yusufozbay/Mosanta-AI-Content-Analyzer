@@ -17,6 +17,14 @@ interface ResultsDisplayProps {
   };
 }
 
+function postProcessMarkdown(md: string) {
+  // Replace *1. Soru* and *Cevap:* with bold
+  let out = md.replace(/\*([0-9]+\. Soru)\*/g, '**$1**');
+  out = out.replace(/\*Cevap:\*/g, '**Cevap:**');
+  // Optionally fix other common issues
+  return out;
+}
+
 const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   results,
   isLoading,
@@ -146,45 +154,15 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-8">
-      <div className="flex items-center justify-between mb-6">
+      {/* Removed Analysis Results heading and share button globally */}
+      {/* <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
           <CheckCircle className="w-6 h-6 text-green-500" />
           <h3 className="text-2xl font-semibold text-gray-800">Analysis Results</h3>
         </div>
       </div>
-
-      <ExportShareButtons results={results} url={analyzedUrl} />
-
-      {/* Shareable Link Section */}
-      {results && !isLoading && !error && (
-        <div className="mb-6">
-          <button
-            onClick={handleShare}
-            disabled={shareLoading || !!shareUrl}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {shareLoading ? 'Bağlantı oluşturuluyor...' : shareUrl ? 'Bağlantı oluşturuldu' : 'Paylaşılabilir Bağlantı Oluştur'}
-          </button>
-          {shareError && <div className="text-red-600 mt-2">{shareError}</div>}
-          {shareUrl && (
-            <div className="mt-3 flex items-center space-x-2">
-              <input
-                type="text"
-                value={shareUrl}
-                readOnly
-                className="w-full px-3 py-2 border rounded text-sm bg-gray-50"
-                onFocus={e => e.target.select()}
-              />
-              <button
-                onClick={handleCopy}
-                className="bg-gray-200 hover:bg-gray-300 px-3 py-2 rounded text-sm font-medium"
-              >
-                {copied ? 'Kopyalandı!' : 'Kopyala'}
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+      <ExportShareButtons results={results} url={analyzedUrl} /> */}
+      {/* Shareable Link Section removed globally */}
 
       {/* {extractedContent && (
         <div className="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
@@ -242,25 +220,16 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   {children}
                 </h4>
               ),
-              p: ({ children }) => {
-                // Custom split for 'Faydası Nedir?', 'Önerilen İçerik:', and 'Önerilen Başlık:'
-                const text = children && typeof children[0] === 'string' ? children[0] : null;
-                if (text && (text.startsWith('Faydası Nedir?') || text.startsWith('Önerilen İçerik:') || text.startsWith('Önerilen Başlık:'))) {
-                  const [label, ...rest] = text.split(/[:：]/);
-                  const restText = rest.join(':').trim();
-                  return (
-                    <>
-                      <p className="block font-bold text-gray-900 text-base mb-1">{label}:</p>
-                      {restText && <p className="block text-gray-800 text-base mb-2">{restText}</p>}
-                    </>
-                  );
-                }
-                return (
-                  <p className="text-gray-800 mb-4 leading-relaxed text-base">
-                    {children}
-                  </p>
-                );
-              },
+              strong: ({ children }) => (
+                <strong className="font-bold text-gray-900">
+                  {children}
+                </strong>
+              ),
+              em: ({ children }) => (
+                <em className="italic text-gray-800">
+                  {children}
+                </em>
+              ),
               ul: ({ children }) => (
                 <ul className="list-disc ml-6 text-gray-800 mb-4 space-y-2">
                   {children}
@@ -271,34 +240,15 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                   {children}
                 </ol>
               ),
-              li: ({ children }) => {
-                // Custom split for 'Faydası Nedir?', 'Önerilen İçerik:', and 'Önerilen Başlık:' in list items
-                const text = children && typeof children[0] === 'string' ? children[0] : null;
-                if (text && (text.trim().startsWith('Faydası Nedir?') || text.trim().startsWith('Önerilen İçerik:') || text.trim().startsWith('Önerilen Başlık:'))) {
-                  const [label, ...rest] = text.split(/[:：]/);
-                  const restText = rest.join(':').trim();
-                  return (
-                    <>
-                      <p className="block font-bold text-gray-900 text-base mb-1">{label}:</p>
-                      {restText && <p className="block text-gray-800 text-base mb-2">{restText}</p>}
-                    </>
-                  );
-                }
-                return (
-                  <li className="text-gray-800 mb-1 leading-relaxed">
-                    {children}
-                  </li>
-                );
-              },
-              strong: ({ children }) => (
-                <strong className="font-bold text-gray-900">
+              li: ({ children }) => (
+                <li className="text-gray-800 mb-1 leading-relaxed">
                   {children}
-                </strong>
+                </li>
               ),
-              em: ({ children }) => (
-                <em className="italic text-gray-800">
+              p: ({ children }) => (
+                <p className="text-gray-800 mb-4 leading-relaxed text-base">
                   {children}
-                </em>
+                </p>
               ),
               code: ({ children }) => (
                 <code className="bg-blue-100 px-2 py-1 rounded text-sm font-mono text-blue-900 border">
@@ -315,7 +265,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
               ),
             }}
           >
-            {results}
+            {postProcessMarkdown(results)}
           </ReactMarkdown>
         </div>
       </div>
