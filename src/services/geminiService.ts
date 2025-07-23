@@ -363,6 +363,7 @@ export const analyzeContent = async (url: string): Promise<string> => {
       throw new Error(`Gemini API error: ${errorData.error?.message || 'Unknown error'}`);
     }
     const data = await response.json();
+    console.log('Gemini API response:', data);
     if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
       throw new Error('No content received from Gemini API');
     }
