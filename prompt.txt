@@ -24,11 +24,6 @@ ________________
 {{input_url_main_content}} // input_url_main_content is not visible on the UI. 
 
 
-# Analiz Edilen Rakipler:*
-
-
-{{competitors_url_list}}
-
 A. STRATEJİK ÖZET VE MARKA KİMLİĞİ ANALİZİ
 * Marka Kimliği:
    * Ton: {Analiz edilen sitenin tonu: örn: Sofistike, deneyimsel ve kişisel}
@@ -36,7 +31,7 @@ A. STRATEJİK ÖZET VE MARKA KİMLİĞİ ANALİZİ
    * Odak: {Analiz edilen sitenin odağı: örn: Atmosfer, vizyon, kürate edilmiş detaylar}
 * Ana Gelişim Fırsatı: {En büyük eksikliği veya fırsatı tek cümlede özetle. örn: İçerik, kullanıcı ihtiyaçlarına göre yapılandırılmamış ve pratik detaylarda eksik.}
 B. REKABET ANALİZİ VE STRATEJİK FIRSAT
-* Analiz Edilen Rakipler: {Tespit edilen rakip URL'lerin listesi}
+* Analiz Edilen Rakipler: {Tespit edilen rakip URL'lerin listesi. 10 rakip incelenecek.}
 * Rekabet Değerlendirmesi: {Rakiplerle keskin bir karşılaştırma yap. Kimin neyi daha iyi yaptığını açıkça belirt. örn: Alem, kapsamlı listesiyle öne çıkarken, PlumeMag kullanıcı odaklı kategorizasyonda daha başarılı.}
 * Stratejik Sonuç: {Analizi özetleyen bir sonuç paragrafı yaz. Kullanıcının, rakiplerin yapısal ve içeriksel güçlerini kendi özgün kimliğini kaybetmeden nasıl entegre ederek konuya domine edebileceğini açıkla.}
 C. DETAYLI İÇERİK ZENGİNLEŞTİRME VE SEO PLANI
